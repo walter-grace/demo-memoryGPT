@@ -111,13 +111,14 @@ def main():
         padding: 0px 0px;
         text-align: center;
     ">
-        <p>Made by <a href='https://nico.super.site/'>Nico</a></p>
+        <p>Designed by <a href='https://nico.super.site/'>Nico</a></p>
     </div>
     """
 
     st.markdown(foot, unsafe_allow_html=True)
     
     # Add custom CSS
+    
     st.markdown(
         """
         <style>
@@ -132,7 +133,7 @@ def main():
                 background-color: #f8f9fa;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                 margin-bottom: 10px;
-                font-family: "IBM Plex Sans", sans-serif;
+                font-family: "Noto Sans Japanese", sans-serif;
             }
             
             .card-tag {
@@ -143,9 +144,9 @@ def main():
                 left: 0px;
                 top: 0px;
                 font-size: 0.6rem;
-                font-family: "IBM Plex Sans", sans-serif;
+                font-family: "Noto Sans Japanese", sans-serif;
                 color: white;
-                background-color: green;
+                background-color: blue;
                 }
                 
             .css-zt5igj {left:0;
@@ -166,16 +167,31 @@ def main():
         """,
         unsafe_allow_html=True,
     )
-    st.sidebar.image("img/chattypdf.png")
+     # Create header container
+    header_container = st.container()
+
+    with header_container:
+        st.write(
+            f"""
+            <div style="display: flex; align-items: center; margin-left: 0;">
+                <h1 style="display: inline-block; font-family: 'Dongle', bold;">Choose Retriever</h1>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        retriever_type = st.selectbox(
+           'default works best' , ["SIMILARITY SEARCH", "SUPPORT VECTOR MACHINES"])
+ 
 
 
    
 
     st.write(
     f"""
+     
     <div style="display: flex; align-items: center; margin-left: 0;">
-        <h1 style="display: inline-block;">ChattyPDF</h1>
-        <sup style="margin-left:5px;font-size:small; color: green;">beta</sup>
+       <h1 style="display: inline-block; font-family: 'Dongle', bold;">ChattyPDF</h1>
     </div>
     """,
     unsafe_allow_html=True,
@@ -188,23 +204,21 @@ def main():
     
     st.sidebar.title("Menu")
     
-    retriever_type = st.sidebar.selectbox(
-        "Choose Retriever", ["SIMILARITY SEARCH", "SUPPORT VECTOR MACHINES"])
-
     # Use RecursiveCharacterTextSplitter as the default and only text splitter
     splitter_type = "RecursiveCharacterTextSplitter"
 
     if 'openai_api_key' not in st.session_state:
-        openai_api_key = st.text_input(
-            'Please enter your OpenAI API key or [get one here](https://platform.openai.com/account/api-keys)', value="", placeholder="Enter the OpenAI API key which begins with sk-")
+        openai_api_key = st.text_input(" Welcome to ChattyPDF, where you can talk with your PDFs!")
         if openai_api_key:
             st.session_state.openai_api_key = openai_api_key
             os.environ["OPENAI_API_KEY"] = openai_api_key
         else:
-            #warning_text = 'Please enter your OpenAI API key. Get yours from here: [link](https://platform.openai.com/account/api-keys)'
-            #warning_html = f'<span>{warning_text}</span>'
-            #st.markdown(warning_html, unsafe_allow_html=True)
+            st.write()  # Add a line break
+            st.write()  # Add another line break
+            st.markdown("<p style='font-size: 18px;'>Please enter your OpenAI API key or <a href='https://platform.openai.com/account/api-keys'>get one here</a></p>", unsafe_allow_html=True)
+            st.markdown("<p style='font-size: 1px;'>[Nothing will be saved after you refresh the page]</p>", unsafe_allow_html=True)
             return
+         
     else:
         os.environ["OPENAI_API_KEY"] = st.session_state.openai_api_key
 
@@ -270,7 +284,7 @@ def main():
         if user_question:
             answer = qa.run(user_question)
             st.write("Answer:", answer)
-
+st.sidebar.image("img/chattypdf.png")
 
 if __name__ == "__main__":
     main()
