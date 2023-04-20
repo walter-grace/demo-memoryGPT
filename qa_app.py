@@ -14,7 +14,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.callbacks.base import CallbackManager
 
-st.set_page_config(page_title="Zxeno Chat",page_icon="💻")
+st.set_page_config(page_title="Zxeno Chat",page_icon="")
 
 @st.cache_data
 def load_docs(files):
@@ -92,7 +92,7 @@ def generate_eval(text, N, chunk):
             eval_set.append(qa)
             st.write("Creating Question:",i+1)
         except:
-            st.warning('Error generating question %s.' % str(i+1), icon=":laptop:")
+            st.warning('Error generating question %s.' % str(i+1), icon="⚠️")
     eval_set_full = list(itertools.chain.from_iterable(eval_set))
     return eval_set_full
 
