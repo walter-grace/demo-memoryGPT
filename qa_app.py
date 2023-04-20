@@ -14,7 +14,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.callbacks.base import CallbackManager
 
-st.set_page_config(page_title="ChattyPDF",page_icon=':shark:')
+st.set_page_config(page_title="Zxeno Chat",page_icon="💻")
 
 @st.cache_data
 def load_docs(files):
@@ -92,7 +92,7 @@ def generate_eval(text, N, chunk):
             eval_set.append(qa)
             st.write("Creating Question:",i+1)
         except:
-            st.warning('Error generating question %s.' % str(i+1), icon="⚠️")
+            st.warning('Error generating question %s.' % str(i+1), icon=":laptop:")
     eval_set_full = list(itertools.chain.from_iterable(eval_set))
     return eval_set_full
 
@@ -111,7 +111,7 @@ def main():
         padding: 0px 0px;
         text-align: center;
     ">
-        <p>Designed by <a href='https://nico.super.site/'>Nico</a></p>
+        <p>Designed by <a href='https://nico.super.site/' >Nico</a></p>
     </div>
     """
 
@@ -130,7 +130,7 @@ def main():
             .css-card {
                 border-radius: 0px;
                 padding: 30px 10px 10px 10px;
-                background-color: #f8f9fa;
+                background-color: #ffaf4d;
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                 margin-bottom: 10px;
                 font-family: "Noto Sans Japanese", sans-serif;
@@ -146,7 +146,7 @@ def main():
                 font-size: 0.6rem;
                 font-family: "Noto Sans Japanese", sans-serif;
                 color: white;
-                background-color: blue;
+                background-color: 009933;
                 }
                 
             .css-zt5igj {left:0;
@@ -190,8 +190,8 @@ def main():
     st.write(
     f"""
      
-    <div style="display: flex; align-items: center; margin-left: 0;">
-       <h1 style="display: inline-block; font-family: 'Dongle', bold;">ChattyPDF</h1>
+    <div style="display: flex; align-items: center; margin-left: 0; ">
+       <h1 style="display: inline-block; font-family: 'Dongle', bold;">Zxeno Chat</h1>
     </div>
     """,
     unsafe_allow_html=True,
@@ -202,13 +202,13 @@ def main():
 
     
     
-    st.sidebar.title("Menu")
+    st.sidebar.title("History + Questions")
     
     # Use RecursiveCharacterTextSplitter as the default and only text splitter
     splitter_type = "RecursiveCharacterTextSplitter"
 
     if 'openai_api_key' not in st.session_state:
-        openai_api_key = st.text_input(" Welcome to ChattyPDF, where you can talk with your PDFs!")
+        openai_api_key = st.text_input(" Welcome to Zxeno Chat, where you can talk with your PDFs!")
         if openai_api_key:
             st.session_state.openai_api_key = openai_api_key
             os.environ["OPENAI_API_KEY"] = openai_api_key
