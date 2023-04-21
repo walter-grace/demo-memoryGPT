@@ -100,6 +100,9 @@ def generate_eval(text, N, chunk):
 # ...
 
 def main():
+    openai_api_key = st.secrets["my_secrets"]["openai_api_key"]
+
+   
     
     foot = f"""
     <div style="
@@ -146,7 +149,7 @@ def main():
                 font-size: 0.6rem;
                 font-family: "Noto Sans Japanese", sans-serif;
                 color: white;
-                background-color: 009933;
+                background-color: orange;
                 }
                 
             .css-zt5igj {left:0;
@@ -192,6 +195,7 @@ def main():
      
     <div style="display: flex; align-items: center; margin-left: 0; ">
        <h1 style="display: inline-block; font-family: 'Dongle', bold;">Zxeno Chat</h1>
+        
     </div>
     """,
     unsafe_allow_html=True,
@@ -203,24 +207,26 @@ def main():
     
     
     st.sidebar.title("History + Questions")
-    
     # Use RecursiveCharacterTextSplitter as the default and only text splitter
     splitter_type = "RecursiveCharacterTextSplitter"
 
     if 'openai_api_key' not in st.session_state:
-        openai_api_key = st.text_input(" Welcome to Zxeno Chat, where you can talk with your PDFs!")
+        openai_api_key = st.text_input(" Welcome to Zxeno Chat, where you can talk with your PDFs!",'upload your PDF and then type your questions here, 5pdf min.')
         if openai_api_key:
-            st.session_state.openai_api_key = openai_api_key
-            os.environ["OPENAI_API_KEY"] = openai_api_key
+            st.session_state.openai_api_key = st.secrets["my_secrets"]["openai_api_key"]
+            os.environ[st.secrets["my_secrets"]["openai_api_key"]] = openai_api_key
         else:
             st.write()  # Add a line break
             st.write()  # Add another line break
             st.markdown("<p style='font-size: 18px;'>Please enter your OpenAI API key or <a href='https://platform.openai.com/account/api-keys'>get one here</a></p>", unsafe_allow_html=True)
             st.markdown("<p style='font-size: 1px;'>[Nothing will be saved after you refresh the page]</p>", unsafe_allow_html=True)
+            
             return
          
     else:
-        os.environ["OPENAI_API_KEY"] = st.session_state.openai_api_key
+        os.environ['OPENAI_API_KEY'] = st.session_state.openai_api_key
+
+
 
     uploaded_files = st.file_uploader("Upload a PDF or TXT Document", type=[
                                       "pdf", "txt"], accept_multiple_files=True)
