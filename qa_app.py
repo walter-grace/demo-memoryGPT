@@ -14,7 +14,10 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.callbacks.base import CallbackManager
 
+
 st.set_page_config(page_title="Zxeno Chat",page_icon="")
+
+
 
 @st.cache_data
 def load_docs(files):
@@ -98,10 +101,28 @@ def generate_eval(text, N, chunk):
 
 
 # ...
+def display_giphy(url):
+    st.markdown(
+        f'<img src="{url}" alt="Gif" style="display:block; margin-left:auto; margin-right:auto;"/>',
+        unsafe_allow_html=True,
+    )
 
 def main():
+
+    header_container = st.container()
+
+    with header_container:
+        giphy_url = "https://media3.giphy.com/media/11lxCeKo6cHkJy/giphy.gif?cid=ecf05e470pujoj7a6pgtyerytj34kh2s5sfq9wl1y5ht9ipy&rid=giphy.gif&ct=g"
+        display_giphy(giphy_url)
+
     openai_api_key = st.secrets["my_secrets"]["openai_api_key"]
 
+    session_state = st.session_state
+
+  
+
+    # Sidebar login status and button
+   
    
     
     foot = f"""
@@ -207,6 +228,8 @@ def main():
     
     
     st.sidebar.title("History + Questions")
+    st.sidebar.markdown("<p style='font-size: 12px;'>Questions will show up after you input your file.</p>", unsafe_allow_html=True)
+
     # Use RecursiveCharacterTextSplitter as the default and only text splitter
     splitter_type = "RecursiveCharacterTextSplitter"
 
